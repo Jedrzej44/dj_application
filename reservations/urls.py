@@ -1,5 +1,5 @@
 """
-URL configuration for rowery project.
+URL configuration for kajaki project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.0/topics/http/urls/
@@ -17,7 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from reservations.views import CarListView
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path("", include('reservations.urls'))
+    path("home/", CarListView.as_view(), name="home_view") # 127.0.0.1:8000/kajaki/
 ]
