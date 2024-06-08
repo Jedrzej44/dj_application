@@ -1,0 +1,25 @@
+<h1>Welcome on our Car Rental website!</h1>
+
+<h3>Please choose your car</h3>
+
+<table>
+    <tr>
+        <th>Car type</th>
+        <th>Model</th>
+        <th>Horsepowe</th>
+        <th>Seats</th>
+        <th>Color</th>
+        <th>Price per day</th>
+    </tr>
+
+    {% for object in object_list %}
+    <tr>
+        <td>{{ object.car_type }}</td>
+        <td>{{ object.model }}</td>
+        <td>{{ object.horsepower }}</td>
+        <td>{{ object.seats }}</td>
+        <td>{{ object.color }}</td>
+        <td>{{ object.price_per_day }}</td>
+    </tr>
+    {% endfor %}
+</ul>
