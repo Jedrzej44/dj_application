@@ -11,3 +11,6 @@
     <li>{{ object.color }}</li>
     <li>{{ object.price_per_day }}</li>
 </ul>
+<button>
+    <a href="{% url 'car_confirm_reservation' object.id %}">Reserve<a/>
+</button>
