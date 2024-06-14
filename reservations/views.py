@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView, DetailView
-
+from reservations.forms import ConfirmReservationForm
 from reservations.models import Car, Client, Reservation
 
 # Create your views here.
@@ -13,3 +13,16 @@ class HomeView(ListView):
 class CarDetailView(DetailView):
     model = Car
     template_name = "car_detail.html"
+
+def confirm_reservation(request, car_id):
+    if request.method == "POST":
+        form = ConfirmReservationForm(request.POST)
+        if form.is_valid():
+            pass
+        else:
+            ValidationError("Form data invalid")
+    else:
+        form = ConfirmReservationForm()
+
+    return render(request, "confirm_reservation.html", {"form": form, "car_id": car_id})
+

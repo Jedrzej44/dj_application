@@ -17,10 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
-from reservations.views import HomeView, CarDetailView
+from reservations.views import HomeView, CarDetailView, confirm_reservation
 
 urlpatterns = [
     path("home/", HomeView.as_view(), name="home_view"), # http://127.0.0.1:8000/home
-    path("car_detail/<int:pk>/", CarDetailView.as_view(), name="car_detail") # http://127.0.0.1:8000/car_detail/int:pk
+    path("car_detail/<int:pk>/", CarDetailView.as_view(), name="car_detail"), # http://127.0.0.1:8000/car_detail/int:pk
+    path("car_detail/<int:car_id>/confirm_reservation", confirm_reservation, name="car_confirm_reservation") # http://127.0.0.1:8000/car_detail/int:pk
 
 ]
