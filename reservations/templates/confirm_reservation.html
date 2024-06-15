@@ -1,5 +1,19 @@
-<form action="{% url 'car_confirm_reservation' car_id %}" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Reserve">
-</form>
+<head>
+    <title>Confirm Reservation</title>
+</head>
+<button>
+    <a href="{% url 'car_detail' car_id %} ">Back</a>
+</button>
+<body>
+    <h3>
+        Please provide details to book a reservation
+    </h3>
+    <form action="{% url 'car_confirm_reservation' car_id %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Reserve">
+    </form>
+    {% if message %}
+        <p style="color: red;">{{ message }}</p>
+    {% endif %}
+</body>

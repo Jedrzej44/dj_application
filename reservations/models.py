@@ -29,9 +29,12 @@ class Client(models.Model):
 class Reservation(models.Model):
     date_of_creation = models.DateTimeField(auto_now_add=True)
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    car = models.ForeignKey(Car, on_delete=models.PROTECT)
+    car = models.ForeignKey(Car, on_delete=models.PROTECT, related_name ="reservations")
     reservation_days = models.PositiveIntegerField(default=1)
+    #start_date = models.DateField()
+    #end_date = models.DateField()
     total_price = models.DecimalField(decimal_places=2, max_digits=10, editable=False)
+
 
 
     def save(self, *args, **kwargs):
