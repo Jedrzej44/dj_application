@@ -15,7 +15,8 @@ class CarDetailView(DetailView):
     template_name = "car_detail.html"
 
 def confirm_reservation(request, car_id):
-    message = ""
+    message1 = ""
+    message2 = ""
     if request.method == "POST":
         form = ConfirmReservationForm(request.POST)
         if form.is_valid():
@@ -31,16 +32,19 @@ def confirm_reservation(request, car_id):
 
             if not car.reservations.exists():
                 reservation = Reservation.objects.create(client=client, car=car)
-                print(f"Reservation {reservation} has been created")
-                return redirect("home_view")
+                message1 = "Reservation accepted!"
+                message2 = (f"Your reservation number is: {reservation.id}")
+                # return redirect("home_view")
             else:
                 form = ConfirmReservationForm()
-                message = "This car is already reserved"
+                message1 = "This car is already reserved!"
+                message2 = "Please go to home view and select another car"
     else:
         form = ConfirmReservationForm()
 
     return render(request, "confirm_reservation.html", {
         "form": form,
         "car_id": car_id,
-        "message": message})
+        "message1": message1,
+        "message2": message2})
 

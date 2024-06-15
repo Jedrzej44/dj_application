@@ -1,4 +1,6 @@
 from django.db import models
+from datetime import date
+from django.utils import timezone
 
 class Car(models.Model):
 
@@ -31,10 +33,10 @@ class Reservation(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     car = models.ForeignKey(Car, on_delete=models.PROTECT, related_name ="reservations")
     reservation_days = models.PositiveIntegerField(default=1)
-    #start_date = models.DateField()
-    #end_date = models.DateField()
     total_price = models.DecimalField(decimal_places=2, max_digits=10, editable=False)
 
+    def __str__(self):
+        return f"{self.client.email}/{self.car.model}"
 
 
     def save(self, *args, **kwargs):

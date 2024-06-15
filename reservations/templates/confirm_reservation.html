@@ -6,14 +6,23 @@
 </button>
 <body>
     <h3>
-        Please provide details to book a reservation
+        Please provide details and select Reserve to book a reservation
     </h3>
     <form action="{% url 'car_confirm_reservation' car_id %}" method="post">
         {% csrf_token %}
         {{ form }}
         <input type="submit" value="Reserve">
     </form>
-    {% if message %}
-        <p style="color: red;">{{ message }}</p>
+    {% if message1%}
+        <p style="color: red;">{{ message1 }}</p>
     {% endif %}
+    {% if message2%}
+        <p style="color: red;">{{ message2 }}</p>
+    {% endif %}
+        Go to home view
+        <button>
+    <a href="{% url 'home_view' %} ">Home</a>
+</button>
+    </h4>
 </body>
+
