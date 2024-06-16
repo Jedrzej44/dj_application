@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView, DetailView
 from reservations.forms import ConfirmReservationForm, CarFilterForm
 from reservations.models import Car, Client, Reservation
-from django.db.models import Q
+from django.db.models import Q, Count
 
 
 def filter_choice_field(qs, field, field_value):
@@ -23,7 +23,7 @@ class HomeView(ListView):
 
 
     def get_queryset(self):
-        qs = Car.objects.prefetch_related("reservations").all()
+        qs = Car.objects.annotate(num_reservations=Count("reservations")).filter(num_reservations=0)
         return qs
 
     def get_context_data(self, **kwargs):
