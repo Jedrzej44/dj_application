@@ -32,8 +32,8 @@ class Reservation(models.Model):
     date_of_creation = models.DateTimeField(auto_now_add=True)
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     car = models.ForeignKey(Car, on_delete=models.PROTECT, related_name ="reservations")
-    start_date = models.DateField(null=True)
-    end_date = models.DateField(null=True)
+    #start_date = models.DateField(null=True)
+    #end_date = models.DateField(null=True)
     reservation_days = models.PositiveIntegerField(default=1)
     total_price = models.DecimalField(decimal_places=2, max_digits=10, editable=False)
 
@@ -42,6 +42,6 @@ class Reservation(models.Model):
 
 
     def save(self, *args, **kwargs):
-        self.reservation_days = (self.end_date - self.start_date).days + 1
+        #self.reservation_days = (self.end_date - self.start_date).days + 1
         self.total_price = self.car.price_per_day * self.reservation_days
         super(Reservation, self).save(*args, **kwargs)
