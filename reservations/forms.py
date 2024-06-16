@@ -33,6 +33,7 @@ class CarFilterForm(forms.Form):
     car_type = forms.ChoiceField(choices=[("None", "All"), ("SUV", "SUV"), ("SPORT", "Sport"), ("STANDARD", "Standard")], required=False)
     color = forms.ChoiceField(choices=[("None", "All"), ("BLACK", "Black"), ("WHITE", "White"), ("RED", "Red"), ("GRAPHITE", "Graphite")], required=False)
     seats = forms.IntegerField(min_value=1, required=False)
-    price_per_day = forms.DecimalField(required=False)
+    min_price = forms.DecimalField(required=False, decimal_places=2, max_digits=6)
+    max_price = forms.DecimalField(required=False, decimal_places=2, max_digits=6)
 
 

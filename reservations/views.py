@@ -38,12 +38,21 @@ class HomeView(ListView):
             car_type = filter_form.cleaned_data["car_type"]
             color = filter_form.cleaned_data["color"]
             seats = filter_form.cleaned_data["seats"]
-            price_per_day = filter_form.cleaned_data["price_per_day"]
+            min_price = filter_form.cleaned_data["min_price"]
+            max_price = filter_form.cleaned_data["max_price"]
+            #price_per_day = filter_form.cleaned_data["price_per_day"]
 
             qs = filter_choice_field(qs, field="car_type", field_value=car_type)
             qs = filter_choice_field(qs, field="color", field_value=color)
             qs = filter_non_required_field(qs, field="seats", field_value=seats)
-            qs = filter_non_required_field(qs, field="price_per_day", field_value=price_per_day)
+            #qs = filter_non_required_field(qs, field="price_per_day", field_value=price_per_day)
+
+            if min_price is not None and max_price is not None:
+                qs = qs.filter(price_per_day__gte=min_price, price_per_day__lte=max_price)
+            elif min_price is not None:
+                qs = qs.filter(price_per_day__gte=min_price)
+            elif max_price is not None:
+                qs = qs.filter(price_per_day__lte=max_price)
 
         context = {self.context_object_name: qs, "form": filter_form}
         return render(request, self.template_name, context)
