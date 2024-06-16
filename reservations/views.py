@@ -1,14 +1,52 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView, DetailView
-from reservations.forms import ConfirmReservationForm
+from reservations.forms import ConfirmReservationForm, CarFilterForm
 from reservations.models import Car, Client, Reservation
+from django.db.models import Q
 
-# Create your views here.
+
+def filter_choice_field(qs, field, field_value):
+    if field_value != "None":
+        qs = qs.filter(**{field: field_value})
+    return qs
+
+def filter_non_required_field(qs, field, field_value):
+    if field_value is not None:
+        qs = qs.filter(**{field: field_value})
+    return qs
+
 class HomeView(ListView):
     model = Car
     template_name = "home_view.html"
     context_object_name = "object_list"
+
+
+    def get_queryset(self):
+        qs = Car.objects.prefetch_related("reservations").all()
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = CarFilterForm()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        qs = self.get_queryset()
+        filter_form = CarFilterForm(request.POST)
+        if filter_form.is_valid():
+            car_type = filter_form.cleaned_data["car_type"]
+            color = filter_form.cleaned_data["color"]
+            seats = filter_form.cleaned_data["seats"]
+            price_per_day = filter_form.cleaned_data["price_per_day"]
+
+            qs = filter_choice_field(qs, field="car_type", field_value=car_type)
+            qs = filter_choice_field(qs, field="color", field_value=color)
+            qs = filter_non_required_field(qs, field="seats", field_value=seats)
+            qs = filter_non_required_field(qs, field="price_per_day", field_value=price_per_day)
+
+        context = {self.context_object_name: qs, "form": filter_form}
+        return render(request, self.template_name, context)
 
 class CarDetailView(DetailView):
     model = Car

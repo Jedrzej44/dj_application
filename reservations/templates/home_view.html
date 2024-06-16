@@ -1,26 +1,38 @@
-<h1>Welcome on our Car Rental website!</h1>
 
-<h3>Please choose your car</h3>
+<head>
+    <title>Welcome on our Car Rental website!</title>
+</head>
+<body>
+    <h1>Welcome on our Car Rental website!</h1>
 
-<table>
-    <tr>
-        <th>Car type</th>
-        <th>Model</th>
-        <th>Horsepower</th>
-        <th>Seats</th>
-        <th>Color</th>
-        <th>Price per day</th>
-    </tr>
+    <h3>Please choose your car</h3>
 
-    {% for object in object_list %}
-    <tr>
-        <td>{{ object.car_type }}</td>
-        <td>{{ object.model }}</td>
-        <td>{{ object.horsepower }}</td>
-        <td>{{ object.seats }}</td>
-        <td>{{ object.color }}</td>
-        <td>{{ object.price_per_day }}</td>
-        <td><a href="{% url 'car_detail' object.id %}"><button>Detail</button></a></td>
-    </tr>
-    {% endfor %}
-</ul>
+    <form method="post" action="{% url 'home_view' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Filter</button>
+    </form>
+
+    <table>
+        <tr>
+            <th>Car type</th>
+            <th>Model</th>
+            <th>Horsepower</th>
+            <th>Seats</th>
+            <th>Color</th>
+            <th>Price per day</th>
+        </tr>
+
+        {% for object in object_list %}
+        <tr>
+            <td>{{ object.car_type }}</td>
+            <td>{{ object.model }}</td>
+            <td>{{ object.horsepower }}</td>
+            <td>{{ object.seats }}</td>
+            <td>{{ object.color }}</td>
+            <td>{{ object.price_per_day }}</td>
+            <td><a href="{% url 'car_detail' object.id %}"><button>Detail</button></a></td>
+        </tr>
+        {% endfor %}
+    <table>
+</body>
