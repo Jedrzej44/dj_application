@@ -1,38 +1,40 @@
-
 <head>
     <title>Welcome on our Car Rental website!</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
+<div class="container">
     <h1>Welcome on our Car Rental website!</h1>
 
     <h3>Please choose your car for today's trip</h3>
-
     <form method="post" action="{% url 'home_view' %}">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Filter</button>
+        <button type="submit" class="btn btn-secondary">Filter</button>
     </form>
 
-    <table>
-        <tr>
-            <th>Car type</th>
-            <th>Model</th>
-            <th>Horsepower</th>
-            <th>Seats</th>
-            <th>Color</th>
-            <th>Price per day</th>
-        </tr>
+<table class="table table-bordered">
+    <tr>
+        <th>Car type</th>
+        <th>Model</th>
+        <th>Horsepower</th>
+        <th>Seats</th>
+        <th>Color</th>
+        <th>Price per day</th>
+    </tr>
 
-        {% for object in object_list %}
-        <tr>
-            <td>{{ object.car_type }}</td>
-            <td>{{ object.model }}</td>
-            <td>{{ object.horsepower }}</td>
-            <td>{{ object.seats }}</td>
-            <td>{{ object.color }}</td>
-            <td>{{ object.price_per_day }}</td>
-            <td><a href="{% url 'car_detail' object.id %}"><button>Detail</button></a></td>
-        </tr>
-        {% endfor %}
-    <table>
+    {% for object in object_list %}
+    <tr>
+        <td>{{ object.car_type }}</td>
+        <td>{{ object.model }}</td>
+        <td>{{ object.horsepower }}</td>
+        <td>{{ object.seats }}</td>
+        <td>{{ object.color }}</td>
+        <td>{{ object.price_per_day }}</td>
+        <td><a href="{% url 'car_detail' object.id %}"><button type="button" class="btn btn-Primary">Detail</button></a></td>
+    </tr>
+    {% endfor %}
+<table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
